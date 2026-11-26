@@ -1,0 +1,16 @@
+Fuentes incluidas en vendor/fonts (formato woff2, subconjunto latino)
+
+Cardo
+  Copyright (c) David J. Perry.
+  Licencia: SIL Open Font License 1.1 (https://openfontlicense.org)
+  Origen: https://fonts.google.com/specimen/Cardo
+
+Inter
+  Copyright (c) The Inter Project Authors (https://github.com/rsms/inter).
+  Licencia: SIL Open Font License 1.1 (https://openfontlicense.org)
+  Origen: https://rsms.me/inter/
+
+La licencia OFL permite usar, estudiar, modificar y redistribuir las fuentes,
+incluso dentro de software comercial, siempre que se conserven los avisos de
+copyright y esta licencia, y que las fuentes no se vendan por separado.
+El texto completo está en https://openfontlicense.org/open-font-license-official-text/

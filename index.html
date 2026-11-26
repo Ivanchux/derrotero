@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Derrotero · mapas interactivos</title>
+<meta name="theme-color" content="#0A1424">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%230A1424'/%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23C9A862' stroke-width='1.6'/%3E%3Cpath d='M16 5l3 8 8 3-8 3-3 8-3-8-8-3 8-3z' fill='%23C9A862'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="vendor/markercluster/MarkerCluster.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body class="tool-select">
+<div class="app" id="app">
+
+  <!-- ======= Panel lateral ======= -->
+  <aside id="sidebar" class="sidebar">
+    <header class="sb-head">
+      <div class="brand">
+        <svg class="brand__mark" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#C9A862" stroke-width="1.5"/><path d="M16 4l3 9 9 3-9 3-3 9-3-9-9-3 9-3z" fill="#C9A862"/><circle cx="16" cy="16" r="2.1" fill="#16294A"/></svg>
+        <span class="brand__name" data-app-name>Derrotero</span>
+      </div>
+      <button id="btnCollapse" class="icon-btn" title="Ocultar panel"><i data-i="panel-left"></i></button>
+    </header>
+
+    <button id="projectBtn" class="project-btn" data-edit-only-menu>
+      <span class="project-btn__text">
+        <span class="project-btn__title" id="projTitle">Mapa</span>
+        <span class="project-btn__sub" id="projSub"></span>
+      </span>
+      <span class="project-btn__chev" data-edit><i data-i="chevron-down" data-s="16"></i></span>
+    </button>
+    <div id="saveStatus" class="save-status" data-edit></div>
+
+    <nav class="tabs" id="tabs" role="tablist">
+      <button class="tab is-active" data-tab="layers" role="tab"><i data-i="layers" data-s="16"></i><span>Capas</span></button>
+      <button class="tab" data-tab="tour" role="tab"><i data-i="route" data-s="16"></i><span>Recorrido</span></button>
+      <button class="tab" data-tab="data" role="tab" data-edit><i data-i="sliders-horizontal" data-s="16"></i><span>Mapa</span></button>
+      <span class="tabs__bar" id="tabsBar"></span>
+    </nav>
+    <div class="tab-views">
+      <section class="tab-view is-active" id="tab-layers"></section>
+      <section class="tab-view" id="tab-tour"></section>
+      <section class="tab-view" id="tab-data"></section>
+    </div>
+    <footer class="sb-foot">
+      <span><span data-app-name>Derrotero</span> <span id="verLabel"></span></span>
+      <span class="sb-foot__keys"><kbd>/</kbd> buscar · <kbd>F</kbd> ver todo · <kbd>T</kbd> presentar</span>
+    </footer>
+  </aside>
+
+  <!-- ======= Escenario ======= -->
+  <main id="stage" class="stage">
+    <div id="map" aria-label="Mapa"></div>
+
+    <button id="btnExpand" class="float fab fab--expand" title="Mostrar panel"><i data-i="panel-left"></i></button>
+
+    <div id="searchBox" class="float search">
+      <div class="search__field">
+        <i data-i="search" data-s="18"></i>
+        <input id="searchInput" type="text" autocomplete="off" spellcheck="false" placeholder="Buscar puntos o direcciones…" aria-label="Buscar">
+        <kbd class="search__kbd">/</kbd>
+        <button id="searchClear" class="icon-btn icon-btn--sm" hidden aria-label="Borrar búsqueda"><i data-i="x" data-s="16"></i></button>
+      </div>
+      <div id="searchResults" class="search__results"></div>
+    </div>
+
+    <div id="baseSwitch" class="float base-switch" role="group" aria-label="Mapa base"></div>
+
+    <div id="hud" class="float hud">
+      <span class="hud__text"></span>
+      <span class="hud__measure"></span>
+      <button class="btn btn--sm" data-hud="undo"><i data-i="undo-2" data-s="15"></i>Quitar último</button>
+      <button class="btn btn--sm btn--primary" data-hud="finish"><i data-i="check" data-s="15"></i>Terminar</button>
+      <button class="btn btn--sm" data-hud="cancel">Cancelar</button>
+    </div>
+
+    <div id="dock" class="float dock" data-edit>
+      <button class="dock__btn is-active" data-tool="select" title="Seleccionar (V)"><i data-i="mouse-pointer-2"></i><span>Mover</span></button>
+      <button class="dock__btn" data-tool="point" title="Añadir punto (P)"><i data-i="map-pin-plus"></i><span>Punto</span></button>
+      <button class="dock__btn" data-tool="line" title="Dibujar línea (L)"><i data-i="spline"></i><span>Línea</span></button>
+      <button class="dock__btn" data-tool="area" title="Dibujar área (A)"><i data-i="pentagon"></i><span>Área</span></button>
+      <span class="dock__sep"></span>
+      <button class="dock__btn" id="btnFit" title="Ver todo (F)"><i data-i="scan"></i><span>Ver todo</span></button>
+      <button class="dock__btn dock__btn--go" id="btnPresent" title="Presentar recorrido (T)"><i data-i="play"></i><span>Presentar</span></button>
+    </div>
+    <div id="dockView" class="float dock dock--view" hidden>
+      <button class="dock__btn" id="btnFit2" title="Ver todo (F)"><i data-i="scan"></i><span>Ver todo</span></button>
+      <button class="dock__btn dock__btn--go" id="btnPresent2" title="Presentar recorrido (T)"><i data-i="play"></i><span>Recorrido</span></button>
+    </div>
+
+    <aside id="detail" class="float detail" aria-live="polite"></aside>
+
+    <aside id="tourPanel" class="float tourpanel"></aside>
+    <div id="tourBar" class="float tourbar"></div>
+    <button id="tourExit" class="float tourexit btn" title="Salir (Esc)"><i data-i="x" data-s="16"></i>Salir</button>
+  </main>
+</div>
+
+<div id="ctx" class="ctx" role="menu"></div>
+<div id="lightbox" class="lightbox"></div>
+<div id="popover" class="popover"></div>
+<div id="modals"></div>
+<div id="toasts" class="toasts" aria-live="polite"></div>
+<div id="dropOverlay" class="drop-overlay"><div><i data-i="file-up" data-s="42"></i><p>Suelta aquí un archivo GeoJSON o JSON de Derrotero</p></div></div>
+<input type="file" id="fileImport" accept=".json,.geojson,application/json,application/geo+json" hidden>
+
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="vendor/markercluster/leaflet.markercluster.js"></script>
+<script src="js/icons-data.js"></script>
+<script src="js/util.js"></script>
+<script src="js/store.js"></script>
+<script src="js/map.js"></script>
+<script src="js/draw.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/editor.js"></script>
+<script src="js/search.js"></script>
+<script src="js/tour.js"></script>
+<script src="js/io.js"></script>
+<script src="js/demo.js" data-viewer-skip></script>
+<script src="js/viewer-template.js" data-viewer-skip></script>
+<script src="js/main.js"></script>
+</body>
+</html>

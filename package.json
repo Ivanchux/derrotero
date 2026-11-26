@@ -1,0 +1,14 @@
+{
+  "name": "derrotero",
+  "version": "0.1.0",
+  "description": "Mapas interactivos propios: puntos, líneas y áreas con imágenes, categorías y modo recorrido. Sin cuentas, sin servidor y sin límites.",
+  "private": true,
+  "license": "MIT",
+  "author": "Iván Brihuega",
+  "scripts": {
+    "serve": "python3 -m http.server 8080",
+    "build:viewer": "node tools/build-viewer-template.js",
+    "build:icons": "node tools/gen-icons.js"
+  },
+  "keywords": ["mapas", "leaflet", "maps", "storytelling", "presentaciones", "static-site"]
+}
