@@ -1,6 +1,25 @@
-# Derrotero
+<p align="center">
+  <img src="docs/portada.jpg" alt="Derrotero: mapas que se cuentan parada a parada" width="100%">
+</p>
 
-Mapas interactivos propios, sin cuentas, sin límites y sin pagos. Colocas puntos, trazas líneas y dibujas áreas, les añades imágenes, enlaces y texto, los ordenas por categorías y los enseñas como un recorrido animado. Todo en una página estática: sin servidor ni base de datos.
+<h1 align="center">Derrotero</h1>
+
+<p align="center">
+  <b>Mapas interactivos propios, sin cuentas, sin límites y sin pagos.</b><br>
+  Colocas puntos, trazas líneas y dibujas áreas, les añades imágenes, enlaces y texto, los ordenas por categorías y los enseñas como un recorrido animado. Todo en una página estática: sin servidor ni base de datos.
+</p>
+
+<p align="center">
+  <a href="https://ivanchux.github.io/derrotero/"><img src="https://img.shields.io/badge/%E2%96%B6%20Ver%20la%20demo-C9A862?style=for-the-badge&labelColor=0A1424" alt="Ver la demo"></a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/HTML5-estático-E34F26?logo=html5&logoColor=white" alt="HTML5 estático">
+  <img src="https://img.shields.io/badge/JavaScript-vanilla-F7DF1E?logo=javascript&logoColor=black" alt="JavaScript vanilla">
+  <img src="https://img.shields.io/badge/Leaflet-1.9.4-199900?logo=leaflet&logoColor=white" alt="Leaflet 1.9.4">
+  <img src="https://img.shields.io/badge/dependencias-0-3DB48F" alt="Sin dependencias">
+  <img src="https://img.shields.io/badge/licencia-MIT-C9A862" alt="Licencia MIT">
+</p>
 
 ![Editor de Derrotero con el mapa de ejemplo](docs/captura-editor.png)
 
